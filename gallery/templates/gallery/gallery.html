@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PythonFlix - Movie Gallery</title>
+    <style>
+      body {
+        background: #111;
+        color: #eee;
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      .header {
+        margin-top: 40px;
+        margin-bottom: 30px;
+        font-size: 48px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #00f7ff, #5ee6eb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: glow 2s ease-in-out infinite alternate;
+        text-align: center;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+        }
+        to {
+          text-shadow: 0 0 20px #5ee6eb, 0 0 30px #5ee6eb;
+        }
+      }
+      .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding: 20px 40px;
+      }
+      .card {
+        width: 200px;
+        height: 300px;
+        perspective: 1000px;
+        cursor: pointer;
+      }
+      .card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.8s;
+      }
+      .card.flipped .card-inner {
+        transform: rotateY(180deg);
+      }
+      .card-front,
+      .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .card-front img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        transition: transform 0.3s ease;
+      }
+      .card-front img:hover {
+        transform: scale(1.05);
+      }
+      .card-back {
+        background: #222;
+        color: #eee;
+        transform: rotateY(180deg);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+      }
+      .card-back .title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .card-back .release {
+        font-size: 14px;
+        color: #bbb;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .stars {
+        font-size: 20px;
+        color: gold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Fancy Title -->
+    <div class="header">PyFlix</div>
+
+    <!-- Movie Poster Gallery -->
+    <div class="gallery">
+      {% for movie in movies %}
+      <div class="card" onclick="this.classList.toggle('flipped')">
+        <div class="card-inner">
+          <div class="card-front">
+            <img
+              src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}"
+              alt="{{ movie.title }}"
+            />
+          </div>
+          <div class="card-back">
+            <div class="title">{{ movie.title }}</div>
+            <div class="release">{{ movie.release_date }}</div>
+            <div class="stars">⭐⭐⭐⭐☆</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
